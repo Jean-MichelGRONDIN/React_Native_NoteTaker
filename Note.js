@@ -18,7 +18,8 @@ const Note = ( props ) => {
     const [edit, setEdit] = useState(false);
 
     const deleteNote = () => {
-        props.selfDelete(props.myId);
+        props.selfDelete();
+        // props.selfDelete(props.myId);
     }
 
     if (edit === false) {

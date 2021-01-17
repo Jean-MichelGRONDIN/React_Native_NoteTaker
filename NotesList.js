@@ -15,41 +15,44 @@ const styles = StyleSheet.create({
     },
 });
 
+var trueList = [];
+
 const NotesList = () => {
-    const [list, addToList] = useState([]);
-    const [nbInList, setNbInList] = useState(list.length);
+    const [reload, setreload] = useState(false);
+    const [nbInList, setNbInList] = useState(trueList.length);
 
     const deleteNote = (thisId) => {
-        var tmpList = [];
-        for (const elem in list) {
-            if (Object.hasOwnProperty.call(list, elem)) {
-                const element = list[elem];
-                if (element.myId !== thisId) {
-                    tmpList.push(element);
-                }
+        var otherTmpList = [];
+        trueList.forEach(elem => {
+            if (elem.id.toString() !== thisId) {
+                otherTmpList.push(elem);
             }
-        }
-        addToList(tmpList);
+        });
+        trueList = otherTmpList;
+        setNbInList(nbInList + 1);
     }
 
     const addToListFunc = (newOne) => {
         var tmpList = [];
-        tmpList.push(<Note value={newOne} key={nbInList} myId={nbInList} selfDelete={deleteNote} />);
-        for (const elem in list) {
-            if (Object.hasOwnProperty.call(list, elem)) {
-                const element = list[elem];
-                tmpList.push(element);
-            }
-        }
-        addToList(tmpList);
+        var tmpID = nbInList.toString();
+        tmpList.push({id: tmpID, item: <Note value={newOne} key={nbInList} myId={tmpID} selfDelete={() => deleteNote(tmpID)} />});
+        trueList.forEach(elem => {
+            tmpList.push(elem);
+        });
+        trueList = tmpList;
         setNbInList(nbInList + 1);
     }
 
+    var tmpList = [];
+    trueList.forEach(elem => {
+        tmpList.push(elem.item);
+    });
+
     return (
         <View style={styles.container}>
-            <Text style={styles.item} >You curently have {nbInList} notes:</Text>
+            <Text style={styles.item} >All the notes you have:</Text>
             <NewNote saveNewNote={addToListFunc}/>
-            {list}
+            {tmpList}
         </View>
     );
 }
