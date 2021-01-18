@@ -6,10 +6,14 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: 22
     },
-    item: {
+    textStyle: {
         padding: 10,
         fontSize: 18,
         height: 44,
+    },
+    inputStyle: {
+        padding: 10,
+        fontSize: 18,
     },
 });
 
@@ -19,12 +23,11 @@ const Note = ( props ) => {
 
     const deleteNote = () => {
         props.selfDelete();
-        // props.selfDelete(props.myId);
     }
 
     if (edit === false) {
         return (
-            <Text style={styles.item} onPress={ () => setEdit(true)} >
+            <Text style={styles.textStyle} onPress={ () => setEdit(true)} >
                 {text.substring(0, 20)}
             </Text>
         );
@@ -32,10 +35,11 @@ const Note = ( props ) => {
         return (
             <>
                 <TextInput
-                    style={styles.item}
+                    style={styles.inputStyle}
                     placeholder="Enter your note here"
                     onChangeText={text => setText(text)}
                     defaultValue={text}
+                    multiline={true}
                 />
                 <Button
                     onPress={() => {

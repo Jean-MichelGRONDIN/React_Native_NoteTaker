@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, TextInput, View, Button } from 'react-native';
+
+const styles = StyleSheet.create({
+    inputStyle: {
+        padding: 10,
+        fontSize: 18,
+    },
+});
 
 const NewNote = ( props ) => {
     const [text, setText] = useState('');
@@ -29,16 +36,11 @@ const NewNote = ( props ) => {
         return (
             <>
                 <TextInput
-                    style={{height: 40}}
+                    style={styles.inputStyle}
                     placeholder="Enter your note here"
                     onChangeText={text => setText(text)}
                     defaultValue={text}
-                />
-                <Button
-                    onPress={() => {
-                        discardNewNote();
-                    }}
-                    title={"Discard new note"}
+                    multiline={true}
                 />
                 <Button
                     onPress={() => {
@@ -46,9 +48,12 @@ const NewNote = ( props ) => {
                     }}
                     title={"Save new note"}
                 />
-                {/* <Text style={{padding: 10, fontSize: 42}}>
-                    {text.split(' ').map((word) => word && '🍕').join(' ')}
-                </Text> */}
+                <Button
+                    onPress={() => {
+                        discardNewNote();
+                    }}
+                    title={"Discard new note"}
+                />
             </>
         );
     }
